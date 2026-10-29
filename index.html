@@ -4,47 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyPing — статус российских сервисов</title>
-  <!-- Добавили пустую иконку, чтобы убрать красную ошибку в консоли -->
   <link rel="icon" href="data:,">
   <style>
-    body { font-family: system-ui, sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-    .container { max-width: 600px; width: 100%; text-align: center; }
-    h1 { font-size: 1.8rem; margin-bottom: 8px; }
-    .subtitle { color: #666; margin-bottom: 32px; font-size: 0.95rem; }
+    :root {
+      --bg: #f5f5f5; --card-bg: #ffffff; --text: #1a1a1a; --text-muted: #666;
+      --up: #0a7d32; --down: #c62828; --unknown: #888; --primary: #2563eb; --primary-hover: #1d4ed8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212; --card-bg: #1e1e1e; --text: #f5f5f5; --text-muted: #aaa;
+        --up: #4ade80; --down: #f87171; --unknown: #888; --primary: #3b82f6; --primary-hover: #2563eb;
+      }
+    }
+    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; transition: background 0.3s; }
+    .container { max-width: 640px; width: 100%; text-align: center; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    .subtitle { color: var(--text-muted); margin-bottom: 32px; font-size: 1rem; }
     
-    /* Обновили классы, чтобы они совпадали со скриптом */
-    .service-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-    .service-name { font-weight: 600; font-size: 1.05rem; }
-    .status-badge { font-size: 0.95rem; font-weight: 500; }
-    .status-up { color: #0a7d32; }
-    .status-down { color: #c62828; }
-    .status-unknown { color: #888; }
+    /* Карточки */
+    .service-card { background: var(--card-bg); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,.1); transition: transform 0.2s; }
+    .service-card:hover { transform: translateY(-2px); }
+    .service-info { text-align: left; flex-grow: 1; }
+    .service-name { font-weight: 600; font-size: 1.1rem; display: block; text-decoration: none; color: var(--text); }
+    .service-name:hover { text-decoration: underline; }
+    .service-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; display: block; }
     
-    .cta { display: inline-block; margin-top: 24px; background: #2563eb; color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: background 0.2s; }
-    .cta:hover { background: #1d4ed8; }
-    .updated { margin-top: 16px; font-size: 0.8rem; color: #999; }
-    .error { color: #c62828; }
+    /* Статусы */
+    .status-badge { font-size: 0.9rem; font-weight: 600; white-space: nowrap; }
+    .status-up { color: var(--up); }
+    .status-down { color: var(--down); }
+    .status-unknown { color: var(--unknown); }
+    
+    /* Кнопки */
+    .btn-sub { margin-left: 12px; background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 0.85rem; transition: all 0.2s; text-decoration: none; }
+    .btn-sub:hover { background: var(--primary); color: #fff; }
+    .cta { display: inline-block; margin-top: 32px; background: var(--primary); color: #fff; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: background 0.2s; box-shadow: 0 4px 12px rgba(37,99,235,.3); }
+    .cta:hover { background: var(--primary-hover); }
+    .updated { margin-top: 20px; font-size: 0.8rem; color: var(--text-muted); }
+    .error { color: var(--down); }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>SkyPing</h1>
-    <p class="subtitle">Доступность Госуслуг, VK, Ozon и банков</p>
+    <p class="subtitle">Мониторинг доступности российских сервисов</p>
     
     <div id="services">
-      <p>Загрузка…</p>
+      <!-- Скелетоны для загрузки -->
+      <div class="service-card" style="opacity: 0.5;">Загрузка данных...</div>
     </div>
     
-    <!-- ВОТ ОН, тот самый пропущенный элемент для текста обновления -->
     <p class="updated" id="updated"></p>
 
     <a class="cta" href="https://t.me/SkyPing_robot" target="_blank" rel="noopener">
-      Узнать, когда заработает
+      🚀 Подписаться на все уведомления
     </a>
   </div>
 
   <script>
+    // Ссылка на raw-файл Upptime
     const STATUS_URL = "https://raw.githubusercontent.com/skytech-alt/SkyPing/main/history/summary.json";
+    // Имя твоего бота (для Deep Links)
+    const BOT_NAME = "SkyPing_robot"; 
 
     async function loadStatus() {
       const container = document.getElementById("services");
@@ -63,17 +84,30 @@
 
         container.innerHTML = services.map(svc => {
           const name = svc.name || "Сервис";
+          const url = svc.url || "#";
           const status = (svc.status || "unknown").toLowerCase();
-          let label, cls;
           
+          // Вычисляем аптайм за 24 часа (если есть данные)
+          const uptime = svc.uptime ? svc.uptime.toFixed(1) + "%" : "н/д";
+          
+          let label, cls;
           if (status === "up")       { label = "🟢 Работает";  cls = "status-up"; }
           else if (status === "down"){ label = "🔴 Недоступен"; cls = "status-down"; }
           else                       { label = "⚪ Неизвестно"; cls = "status-unknown"; }
 
+          // Формируем Deep Link для подписки на КОНКРЕТНЫЙ сервис
+          const deepLink = `https://t.me/${BOT_NAME}?start=sub_${encodeURIComponent(name)}`;
+
           return `
             <div class="service-card">
-              <span class="service-name">${escapeHtml(name)}</span>
-              <span class="status-badge ${cls}">${label}</span>
+              <div class="service-info">
+                <a href="${url}" target="_blank" class="service-name">${escapeHtml(name)}</a>
+                <span class="service-meta">Аптайм 24ч: ${uptime}</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <span class="status-badge ${cls}">${label}</span>
+                <a href="${deepLink}" class="btn-sub" target="_blank">Уведомлять</a>
+              </div>
             </div>`;
         }).join("");
 
