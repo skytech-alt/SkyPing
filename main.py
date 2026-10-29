@@ -1,15 +1,14 @@
-"""
-SkyPing Backend — FastAPI на Render Free.
-Принимает webhook от Upptime и Telegram, рассылает уведомления.
-"""
-import os, json, logging
-from typing import Optional, Set
+import os
+import json
+import logging
+from typing import Set
 import httpx
 import redis.asyncio as redis
 from fastapi import FastAPI, Request, HTTPException
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.client.default import DefaultBotProperties
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("skyping")
@@ -17,118 +16,101 @@ logger = logging.getLogger("skyping")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 REDIS_URL = os.getenv("REDIS_URL", "")
 UPPTIME_STATUS_URL = os.getenv("UPPTIME_STATUS_URL", "")
-SUBSCRIBERS_FILE = "subscribers.json"
 
 app = FastAPI(title="SkyPing Backend")
-bot: Optional[Bot] = None
-dp: Optional[Dispatcher] = None
-if BOT_TOKEN:
-    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
-    dp = Dispatcher()
+bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML")) if BOT_TOKEN else None
+dp = Dispatcher() if bot else None
+redis_client = redis.from_url(REDIS_URL, decode_responses=True) if REDIS_URL else None
 
-redis_client: Optional[redis.Redis] = None
-if REDIS_URL:
-    redis_client = redis.from_url(REDIS_URL, decode_responses=True)
+# Хранение в Redis:
+# Ключ: "subs:<ServiceName>" -> Set(chat_id)
 
-async def get_subscribers() -> Set[str]:
+async def add_sub(chat_id: str, service: str):
     if redis_client:
-        return set(await redis_client.smembers("subscribers"))
-    try:
-        with open(SUBSCRIBERS_FILE, encoding="utf-8") as f:
-            return set(json.load(f))
-    except (FileNotFoundError, json.JSONDecodeError):
-        return set()
+        await redis_client.sadd(f"subs:{service}", chat_id)
+        await redis_client.sadd(f"user:{chat_id}", service)
 
-async def save_subscriber(chat_id: str) -> None:
+async def remove_sub(chat_id: str, service: str):
     if redis_client:
-        await redis_client.sadd("subscribers", chat_id)
-    else:
-        subs = await get_subscribers()
-        subs.add(chat_id)
-        with open(SUBSCRIBERS_FILE, "w", encoding="utf-8") as f:
-            json.dump(list(subs), f)
+        await redis_client.srem(f"subs:{service}", chat_id)
+        await redis_client.srem(f"user:{chat_id}", service)
 
-async def remove_subscriber(chat_id: str) -> None:
+async def get_user_subs(chat_id: str) -> Set[str]:
     if redis_client:
-        await redis_client.srem("subscribers", chat_id)
-    else:
-        subs = await get_subscribers()
-        subs.discard(chat_id)
-        with open(SUBSCRIBERS_FILE, "w", encoding="utf-8") as f:
-            json.dump(list(subs), f)
+        return await redis_client.smembers(f"user:{chat_id}")
+    return set()
 
-async def broadcast(text: str) -> None:
-    if not bot:
-        logger.warning("BOT_TOKEN не задан")
-        return
-    for cid in await get_subscribers():
-        try:
-            await bot.send_message(chat_id=cid, text=text)
-        except Exception as e:
-            logger.error("send to %s: %s", cid, e)
+async def broadcast(service: str, text: str):
+    if not bot or not redis_client: return
+    subscribers = await redis_client.smembers(f"subs:{service}")
+    for cid in subscribers:
+        try: await bot.send_message(chat_id=cid, text=text)
+        except Exception as e: logger.error(f"Err to {cid}: {e}")
 
+# ── Эндпоинты ──
 @app.get("/health")
-async def health():
-    return {"status": "ok"}
+async def health(): return {"status": "ok"}
 
 @app.post("/webhook/upptime")
 async def upptime_webhook(request: Request):
     payload = await request.json()
-    logger.info("Upptime payload: %s", payload)
-    status = (payload.get("status") or payload.get("site", {}).get("status") or "").lower()
-    name = payload.get("service_name") or payload.get("name") or "Сервис"
+    status = (payload.get("status") or "").lower()
+    name = payload.get("service_name") or "Сервис"
     cause = payload.get("cause") or "уточняется"
+    
     if status == "down":
-        await broadcast(f"⚠️ <b>{name}</b> недоступен. Причина: {cause}. Сообщим, когда заработает.")
+        await broadcast(name, f"⚠️ <b>{name}</b> недоступен.\nПричина: {cause}\nМы сообщим, когда заработает.")
     elif status == "up":
-        await broadcast(f"✅ <b>{name}</b> снова работает!")
+        await broadcast(name, f"✅ <b>{name}</b> снова работает!")
     return {"ok": True}
 
 @app.post("/webhook/telegram")
 async def telegram_webhook(request: Request):
-    if not dp or not bot:
-        raise HTTPException(503, "Bot not configured")
     update = types.Update.model_validate(await request.json())
     await dp.feed_update(bot, update)
     return {"ok": True}
 
-if dp:
-    @dp.message(Command("start"))
-    async def start(msg: types.Message):
-        await save_subscriber(str(msg.chat.id))
-        await msg.answer("👋 SkyPing на связи. /status — статус, /stop — отписка.")
+# ── Хэндлеры ──
+@dp.message(Command("start"))
+async def cmd_start(message: types.Message):
+    chat_id = str(message.chat.id)
+    
+    # Проверяем, пришел ли юзер по Deep Link (например, /start sub_Госуслуги)
+    args = message.text.split()
+    if len(args) > 1 and args[1].startswith("sub_"):
+        service_name = args[1].replace("sub_", "").replace("%20", " ")
+        await add_sub(chat_id, service_name)
+        await message.answer(f"✅ Вы подписались на уведомления для <b>{service_name}</b>!\n\nНажмите /mysubs, чтобы посмотреть все подписки.")
+        return
 
-    @dp.message(Command("stop"))
-    async def stop(msg: types.Message):
-        await remove_subscriber(str(msg.chat.id))
-        await msg.answer("Отписались. /start — вернуться.")
+    # Обычный старт
+    await message.answer(
+        "👋 Привет! Я слежу за доступностью сервисов.\n\n"
+        "Выберите сервисы на сайте, или используйте /mysubs, чтобы управлять подписками."
+    )
 
-    @dp.message(Command("status"))
-    async def status(msg: types.Message):
-        if not UPPTIME_STATUS_URL:
-            await msg.answer("Источник статуса не настроен.")
-            return
-        try:
-            async with httpx.AsyncClient(timeout=10) as c:
-                data = (await c.get(UPPTIME_STATUS_URL)).json()
-        except Exception:
-            await msg.answer("Не удалось получить статус.")
-            return
-        lines = ["📊 <b>Статус:</b>"]
-        for svc in (data if isinstance(data, list) else data.get("services", [])):
-            st = svc.get("status", "unknown")
-            emoji = "🟢" if st == "up" else "🔴" if st == "down" else "⚪"
-            lines.append(f"{emoji} {svc.get('name', '?')}")
-        await msg.answer("\n".join(lines))
+@dp.message(Command("mysubs"))
+async def cmd_mysubs(message: types.Message):
+    chat_id = str(message.chat.id)
+    subs = await get_user_subs(chat_id)
+    
+    if not subs:
+        await message.answer("У вас пока нет подписок. Нажмите кнопку 'Уведомлять' на сайте.")
+        return
+        
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=f"❌ Отписаться от {s}", callback_data=f"unsub_{s}")] for s in subs
+    ])
+    await message.answer("Ваши подписки:\n" + "\n".join([f"• {s}" for s in subs]), reply_markup=kb)
+
+@dp.callback_query(lambda c: c.data.startswith("unsub_"))
+async def process_unsub(callback: types.CallbackQuery):
+    service = callback.data.replace("unsub_", "")
+    await remove_sub(str(callback.message.chat.id), service)
+    await callback.answer(f"Вы отписались от {service}")
+    await callback.message.edit_text(f"✅ Вы больше не получаете уведомления для <b>{service}</b>.")
 
 @app.on_event("startup")
 async def startup():
     if bot and os.getenv("RENDER_EXTERNAL_URL"):
         await bot.set_webhook(f"{os.getenv('RENDER_EXTERNAL_URL')}/webhook/telegram")
-
-@app.on_event("shutdown")
-async def shutdown():
-    if redis_client:
-        await redis_client.close()
-    if bot:
-        await bot.session.close()
