@@ -9,6 +9,14 @@ sites:
     url: https://www.ozon.ru
   - name: Сбербанк
     url: https://www.sberbank.ru
+  - name: SkyForge
+    url: https://skyforge-docs.onrender.com
+  - name: ТСЖ-Деск
+    url: https://tszh-desk.us.ci
+  - name: SkyPackages
+    url: https://skypackages.onrender.com
+  - name: DeepSeek
+    url: https://chat.deepseek.com
 status-website:
   baseUrl: /SkyPing
   name: SkyPing
