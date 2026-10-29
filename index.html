@@ -20,23 +20,59 @@
     <div id="services"><p>Загрузка…</p></div>
     <a class="cta" href="https://t.me/SkyPing_robot">Узнать, когда заработает</a>
   </div>
-  <script>
+    <script>
+    // ПРАВИЛЬНЫЙ адрес файла со статусами
     const STATUS_URL = "https://raw.githubusercontent.com/skytech-alt/SkyPing/main/history/summary.json";
-    async function load() {
+
+    async function loadStatus() {
+      const container = document.getElementById("services");
+      const updatedEl = document.getElementById("updated");
+
       try {
-        const data = await (await fetch(URL, {cache:"no-store"})).json();
+        // Внимание: здесь должна быть переменная STATUS_URL
+        const resp = await fetch(STATUS_URL, { cache: "no-store" });
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        const data = await resp.json();
+
+        // Upptime возвращает массив сервисов
         const services = Array.isArray(data) ? data : (data.services || []);
-        document.getElementById("services").innerHTML = services.map(s => {
-          const st = (s.status||"unknown").toLowerCase();
-          const label = st==="up" ? "🟢 Работает" : st==="down" ? "🔴 Недоступен" : "⚪ Неизвестно";
-          const cls = st==="up" ? "up" : st==="down" ? "down" : "";
-          return `<div class="card"><span>${s.name||"Сервис"}</span><span class="${cls}">${label}</span></div>`;
+        if (!services.length) {
+          container.innerHTML = '<p class="error">Данных пока нет.</p>';
+          return;
+        }
+
+        container.innerHTML = services.map(svc => {
+          const name = svc.name || "Сервис";
+          const status = (svc.status || "unknown").toLowerCase();
+          let label, cls;
+          
+          if (status === "up")       { label = "🟢 Работает";  cls = "status-up"; }
+          else if (status === "down"){ label = "🔴 Недоступен"; cls = "status-down"; }
+          else                       { label = "⚪ Неизвестно"; cls = "status-unknown"; }
+
+          return `
+            <div class="service-card">
+              <span class="service-name">${escapeHtml(name)}</span>
+              <span class="status-badge ${cls}">${label}</span>
+            </div>`;
         }).join("");
-      } catch(e) {
-        document.getElementById("services").innerHTML = '<p>Не удалось загрузить статус.</p>';
+
+        updatedEl.textContent = "Обновлено: " + new Date().toLocaleString("ru-RU");
+      } catch (e) {
+        console.error("Ошибка загрузки:", e);
+        container.innerHTML = '<p class="error">Не удалось загрузить статус.</p>';
       }
     }
-    load(); setInterval(load, 60000);
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+
+    // Запускаем при загрузке и обновляем каждую минуту
+    loadStatus();
+    setInterval(loadStatus, 60_000);
   </script>
 </body>
 </html>
