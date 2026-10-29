@@ -4,19 +4,19 @@
     "url": "https://www.gosuslugi.ru",
     "icon": "https://icons.duckduckgo.com/ip3/www.gosuslugi.ru.ico",
     "slug": "gosuslugi",
-    "status": "down",
-    "uptime": "76.81%",
-    "uptimeDay": "76.81%",
-    "uptimeWeek": "76.81%",
-    "uptimeMonth": "76.81%",
-    "uptimeYear": "76.81%",
-    "time": 0,
-    "timeDay": 0,
-    "timeWeek": 0,
-    "timeMonth": 0,
-    "timeYear": 0,
+    "status": "up",
+    "uptime": "4.02%",
+    "uptimeDay": "4.02%",
+    "uptimeWeek": "4.02%",
+    "uptimeMonth": "4.02%",
+    "uptimeYear": "4.02%",
+    "time": 1439,
+    "timeDay": 1439,
+    "timeWeek": 1439,
+    "timeMonth": 1439,
+    "timeYear": 1439,
     "dailyMinutesDown": {
-      "2026-10-29": 1
+      "2026-10-29": 136
     }
   },
   {
@@ -43,18 +43,18 @@
     "icon": "https://icons.duckduckgo.com/ip3/www.ozon.ru.ico",
     "slug": "ozon",
     "status": "down",
-    "uptime": "48.67%",
-    "uptimeDay": "48.67%",
-    "uptimeWeek": "48.67%",
-    "uptimeMonth": "48.67%",
-    "uptimeYear": "48.67%",
+    "uptime": "0.51%",
+    "uptimeDay": "0.51%",
+    "uptimeWeek": "0.51%",
+    "uptimeMonth": "0.51%",
+    "uptimeYear": "0.51%",
     "time": 0,
     "timeDay": 0,
     "timeWeek": 0,
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-10-29": 1
+      "2026-10-29": 136
     }
   },
   {
@@ -63,18 +63,18 @@
     "icon": "https://icons.duckduckgo.com/ip3/www.sberbank.ru.ico",
     "slug": "sberbank",
     "status": "down",
-    "uptime": "31.67%",
-    "uptimeDay": "31.67%",
-    "uptimeWeek": "31.67%",
-    "uptimeMonth": "31.67%",
-    "uptimeYear": "31.67%",
+    "uptime": "0.17%",
+    "uptimeDay": "0.17%",
+    "uptimeWeek": "0.17%",
+    "uptimeMonth": "0.17%",
+    "uptimeYear": "0.17%",
     "time": 0,
     "timeDay": 0,
     "timeWeek": 0,
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-10-29": 0
+      "2026-10-29": 136
     }
   },
   {
@@ -137,18 +137,18 @@
     "icon": "https://icons.duckduckgo.com/ip3/chat.deepseek.com.ico",
     "slug": "deep-seek",
     "status": "down",
-    "uptime": "48.35%",
-    "uptimeDay": "48.35%",
-    "uptimeWeek": "48.35%",
-    "uptimeMonth": "48.35%",
-    "uptimeYear": "48.35%",
+    "uptime": "0.15%",
+    "uptimeDay": "0.15%",
+    "uptimeWeek": "0.15%",
+    "uptimeMonth": "0.15%",
+    "uptimeYear": "0.15%",
     "time": 39,
     "timeDay": 39,
     "timeWeek": 39,
     "timeMonth": 39,
     "timeYear": 39,
     "dailyMinutesDown": {
-      "2026-10-29": 0
+      "2026-10-29": 135
     }
   }
 ]
