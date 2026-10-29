@@ -4,24 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyPing — статус российских сервисов</title>
+  <!-- Добавили пустую иконку, чтобы убрать красную ошибку в консоли -->
+  <link rel="icon" href="data:,">
   <style>
     body { font-family: system-ui, sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
     .container { max-width: 600px; width: 100%; text-align: center; }
-    h1 { font-size: 1.8rem; }
-    .card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
-    .up { color: #0a7d32; } .down { color: #c62828; }
-    .cta { display: inline-block; margin-top: 24px; background: #2563eb; color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+    h1 { font-size: 1.8rem; margin-bottom: 8px; }
+    .subtitle { color: #666; margin-bottom: 32px; font-size: 0.95rem; }
+    
+    /* Обновили классы, чтобы они совпадали со скриптом */
+    .service-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    .service-name { font-weight: 600; font-size: 1.05rem; }
+    .status-badge { font-size: 0.95rem; font-weight: 500; }
+    .status-up { color: #0a7d32; }
+    .status-down { color: #c62828; }
+    .status-unknown { color: #888; }
+    
+    .cta { display: inline-block; margin-top: 24px; background: #2563eb; color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+    .cta:hover { background: #1d4ed8; }
+    .updated { margin-top: 16px; font-size: 0.8rem; color: #999; }
+    .error { color: #c62828; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>SkyPing</h1>
-    <p>Доступность Госуслуг, VK, Ozon и банков</p>
-    <div id="services"><p>Загрузка…</p></div>
-    <a class="cta" href="https://t.me/SkyPing_robot">Узнать, когда заработает</a>
+    <p class="subtitle">Доступность Госуслуг, VK, Ozon и банков</p>
+    
+    <div id="services">
+      <p>Загрузка…</p>
+    </div>
+    
+    <!-- ВОТ ОН, тот самый пропущенный элемент для текста обновления -->
+    <p class="updated" id="updated"></p>
+
+    <a class="cta" href="https://t.me/SkyPing_robot" target="_blank" rel="noopener">
+      Узнать, когда заработает
+    </a>
   </div>
-    <script>
-    // ПРАВИЛЬНЫЙ адрес файла со статусами
+
+  <script>
     const STATUS_URL = "https://raw.githubusercontent.com/skytech-alt/SkyPing/main/history/summary.json";
 
     async function loadStatus() {
@@ -29,12 +51,10 @@
       const updatedEl = document.getElementById("updated");
 
       try {
-        // Внимание: здесь должна быть переменная STATUS_URL
         const resp = await fetch(STATUS_URL, { cache: "no-store" });
         if (!resp.ok) throw new Error("HTTP " + resp.status);
         const data = await resp.json();
 
-        // Upptime возвращает массив сервисов
         const services = Array.isArray(data) ? data : (data.services || []);
         if (!services.length) {
           container.innerHTML = '<p class="error">Данных пока нет.</p>';
@@ -70,7 +90,6 @@
       }[c]));
     }
 
-    // Запускаем при загрузке и обновляем каждую минуту
     loadStatus();
     setInterval(loadStatus, 60_000);
   </script>
