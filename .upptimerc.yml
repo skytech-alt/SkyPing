@@ -1,0 +1,15 @@
+owner: skytech-alt
+repo: SkyPing
+sites:
+  - name: Госуслуги
+    url: https://www.gosuslugi.ru
+  - name: VK
+    url: https://vk.com
+  - name: Ozon
+    url: https://www.ozon.ru
+  - name: Сбербанк
+    url: https://www.sberbank.ru
+status-website:
+  baseUrl: /SkyPing
+  name: SkyPing
+  introTitle: "Мониторинг доступности российских сервисов"
