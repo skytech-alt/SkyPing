@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyPing — статус российских сервисов</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+    .container { max-width: 600px; width: 100%; text-align: center; }
+    h1 { font-size: 1.8rem; }
+    .card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .up { color: #0a7d32; } .down { color: #c62828; }
+    .cta { display: inline-block; margin-top: 24px; background: #2563eb; color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SkyPing</h1>
+    <p>Доступность Госуслуг, VK, Ozon и банков</p>
+    <div id="services"><p>Загрузка…</p></div>
+    <a class="cta" href="https://t.me/YOUR_BOT_skytech-alt">Узнать, когда заработает</a>
+  </div>
+  <script>
+    const URL = "https://skytech-alt.github.io/SkyPing/api/status.json";
+    async function load() {
+      try {
+        const data = await (await fetch(URL, {cache:"no-store"})).json();
+        const services = Array.isArray(data) ? data : (data.services || []);
+        document.getElementById("services").innerHTML = services.map(s => {
+          const st = (s.status||"unknown").toLowerCase();
+          const label = st==="up" ? "🟢 Работает" : st==="down" ? "🔴 Недоступен" : "⚪ Неизвестно";
+          const cls = st==="up" ? "up" : st==="down" ? "down" : "";
+          return `<div class="card"><span>${s.name||"Сервис"}</span><span class="${cls}">${label}</span></div>`;
+        }).join("");
+      } catch(e) {
+        document.getElementById("services").innerHTML = '<p>Не удалось загрузить статус.</p>';
+      }
+    }
+    load(); setInterval(load, 60000);
+  </script>
+</body>
+</html>
