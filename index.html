@@ -21,7 +21,7 @@
     <a class="cta" href="https://t.me/YOUR_BOT_skytech-alt">Узнать, когда заработает</a>
   </div>
   <script>
-    const URL = "https://skytech-alt.github.io/SkyPing/api/status.json";
+    const STATUS_URL = "https://raw.githubusercontent.com/skytech-alt/SkyPing/main/history/summary.json";
     async function load() {
       try {
         const data = await (await fetch(URL, {cache:"no-store"})).json();
