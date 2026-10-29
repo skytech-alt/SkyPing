@@ -61,7 +61,7 @@
     </a>
   </div>
 
-  <script>
+    <script>
     // Ссылка на raw-файл Upptime
     const STATUS_URL = "https://raw.githubusercontent.com/skytech-alt/SkyPing/main/history/summary.json";
     // Имя твоего бота (для Deep Links)
@@ -87,8 +87,15 @@
           const url = svc.url || "#";
           const status = (svc.status || "unknown").toLowerCase();
           
-          // Вычисляем аптайм за 24 часа (если есть данные)
-          const uptime = svc.uptime ? svc.uptime.toFixed(1) + "%" : "н/д";
+          // Безопасная обработка аптайма: если строка — выводим как есть, если число — форматируем
+          let uptime = "н/д";
+          if (svc.uptime) {
+              if (typeof svc.uptime === 'string') {
+                  uptime = svc.uptime;
+              } else if (typeof svc.uptime === 'number') {
+                  uptime = svc.uptime.toFixed(1) + "%";
+              }
+          }
           
           let label, cls;
           if (status === "up")       { label = "🟢 Работает";  cls = "status-up"; }
@@ -102,7 +109,7 @@
             <div class="service-card">
               <div class="service-info">
                 <a href="${url}" target="_blank" class="service-name">${escapeHtml(name)}</a>
-                <span class="service-meta">Аптайм 24ч: ${uptime}</span>
+                <span class="service-meta">Аптайм: ${uptime}</span>
               </div>
               <div style="display: flex; align-items: center;">
                 <span class="status-badge ${cls}">${label}</span>
