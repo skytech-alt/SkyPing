@@ -4,19 +4,20 @@
     "url": "https://www.gosuslugi.ru",
     "icon": "https://icons.duckduckgo.com/ip3/www.gosuslugi.ru.ico",
     "slug": "gosuslugi",
-    "status": "up",
-    "uptime": "4.02%",
-    "uptimeDay": "4.02%",
-    "uptimeWeek": "4.02%",
-    "uptimeMonth": "4.02%",
-    "uptimeYear": "4.02%",
+    "status": "down",
+    "uptime": "63.60%",
+    "uptimeDay": "63.60%",
+    "uptimeWeek": "63.60%",
+    "uptimeMonth": "63.60%",
+    "uptimeYear": "63.60%",
     "time": 1439,
     "timeDay": 1439,
     "timeWeek": 1439,
     "timeMonth": 1439,
     "timeYear": 1439,
     "dailyMinutesDown": {
-      "2026-10-29": 136
+      "2026-10-29": 136,
+      "2026-10-30": 2
     }
   },
   {
@@ -43,18 +44,19 @@
     "icon": "https://icons.duckduckgo.com/ip3/www.ozon.ru.ico",
     "slug": "ozon",
     "status": "down",
-    "uptime": "0.51%",
-    "uptimeDay": "0.51%",
-    "uptimeWeek": "0.51%",
-    "uptimeMonth": "0.51%",
-    "uptimeYear": "0.51%",
+    "uptime": "0.19%",
+    "uptimeDay": "0.19%",
+    "uptimeWeek": "0.19%",
+    "uptimeMonth": "0.19%",
+    "uptimeYear": "0.19%",
     "time": 0,
     "timeDay": 0,
     "timeWeek": 0,
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-10-29": 136
+      "2026-10-30": 114,
+      "2026-10-29": 258
     }
   },
   {
@@ -63,18 +65,19 @@
     "icon": "https://icons.duckduckgo.com/ip3/www.sberbank.ru.ico",
     "slug": "sberbank",
     "status": "down",
-    "uptime": "0.17%",
-    "uptimeDay": "0.17%",
-    "uptimeWeek": "0.17%",
-    "uptimeMonth": "0.17%",
-    "uptimeYear": "0.17%",
+    "uptime": "0.06%",
+    "uptimeDay": "0.06%",
+    "uptimeWeek": "0.06%",
+    "uptimeMonth": "0.06%",
+    "uptimeYear": "0.06%",
     "time": 0,
     "timeDay": 0,
     "timeWeek": 0,
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-10-29": 136
+      "2026-10-30": 114,
+      "2026-10-29": 257
     }
   },
   {
@@ -137,18 +140,19 @@
     "icon": "https://icons.duckduckgo.com/ip3/chat.deepseek.com.ico",
     "slug": "deep-seek",
     "status": "down",
-    "uptime": "0.15%",
-    "uptimeDay": "0.15%",
-    "uptimeWeek": "0.15%",
-    "uptimeMonth": "0.15%",
-    "uptimeYear": "0.15%",
+    "uptime": "0.05%",
+    "uptimeDay": "0.05%",
+    "uptimeWeek": "0.05%",
+    "uptimeMonth": "0.05%",
+    "uptimeYear": "0.05%",
     "time": 39,
     "timeDay": 39,
     "timeWeek": 39,
     "timeMonth": 39,
     "timeYear": 39,
     "dailyMinutesDown": {
-      "2026-10-29": 135
+      "2026-10-30": 115,
+      "2026-10-29": 257
     }
   }
 ]
