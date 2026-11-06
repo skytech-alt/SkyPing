@@ -4,17 +4,17 @@
     "url": "https://www.gosuslugi.ru",
     "icon": "https://icons.duckduckgo.com/ip3/www.gosuslugi.ru.ico",
     "slug": "gosuslugi",
-    "status": "down",
-    "uptime": "56.92%",
-    "uptimeDay": "83.04%",
-    "uptimeWeek": "54.52%",
-    "uptimeMonth": "56.92%",
-    "uptimeYear": "56.92%",
-    "time": 2342,
-    "timeDay": 1782,
-    "timeWeek": 2436,
-    "timeMonth": 2342,
-    "timeYear": 2342,
+    "status": "up",
+    "uptime": "54.91%",
+    "uptimeDay": "54.86%",
+    "uptimeWeek": "50.50%",
+    "uptimeMonth": "54.91%",
+    "uptimeYear": "54.91%",
+    "time": 2310,
+    "timeDay": 1857,
+    "timeWeek": 2390,
+    "timeMonth": 2310,
+    "timeYear": 2310,
     "dailyMinutesDown": {
       "2026-10-29": 136,
       "2026-10-30": 34,
@@ -24,7 +24,7 @@
       "2026-11-03": 564,
       "2026-11-04": 1056,
       "2026-11-05": 629,
-      "2026-11-06": 213
+      "2026-11-06": 619
     }
   },
   {
@@ -62,7 +62,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-11-06": 692,
+      "2026-11-06": 1098,
       "2026-11-05": 1440,
       "2026-11-04": 1440,
       "2026-11-03": 1440,
@@ -90,7 +90,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-11-06": 692,
+      "2026-11-06": 1098,
       "2026-11-05": 1440,
       "2026-11-04": 1440,
       "2026-11-03": 1440,
@@ -172,7 +172,7 @@
     "timeMonth": 58,
     "timeYear": 58,
     "dailyMinutesDown": {
-      "2026-11-06": 692,
+      "2026-11-06": 1098,
       "2026-11-05": 1440,
       "2026-11-04": 1440,
       "2026-11-03": 1440,
