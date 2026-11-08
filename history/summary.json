@@ -5,13 +5,13 @@
     "icon": "https://icons.duckduckgo.com/ip3/www.gosuslugi.ru.ico",
     "slug": "gosuslugi",
     "status": "down",
-    "uptime": "56.67%",
-    "uptimeDay": "56.41%",
+    "uptime": "56.34%",
+    "uptimeDay": "52.09%",
     "uptimeWeek": "54.13%",
-    "uptimeMonth": "56.67%",
-    "uptimeYear": "56.67%",
+    "uptimeMonth": "56.34%",
+    "uptimeYear": "56.34%",
     "time": 2307,
-    "timeDay": 2269,
+    "timeDay": 0,
     "timeWeek": 2420,
     "timeMonth": 2307,
     "timeYear": 2307,
@@ -26,7 +26,7 @@
       "2026-11-05": 629,
       "2026-11-06": 619,
       "2026-11-07": 496,
-      "2026-11-08": 132
+      "2026-11-08": 211
     }
   },
   {
@@ -41,7 +41,7 @@
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
     "time": 1757,
-    "timeDay": 1962,
+    "timeDay": 2170,
     "timeWeek": 1778,
     "timeMonth": 1757,
     "timeYear": 1757,
@@ -64,7 +64,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-11-08": 132,
+      "2026-11-08": 211,
       "2026-11-07": 1440,
       "2026-11-06": 1440,
       "2026-11-05": 1440,
@@ -94,7 +94,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-11-08": 132,
+      "2026-11-08": 211,
       "2026-11-07": 1440,
       "2026-11-06": 1440,
       "2026-11-05": 1440,
@@ -119,7 +119,7 @@
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
     "time": 284,
-    "timeDay": 238,
+    "timeDay": 230,
     "timeWeek": 246,
     "timeMonth": 284,
     "timeYear": 284,
@@ -137,7 +137,7 @@
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
     "time": 547,
-    "timeDay": 550,
+    "timeDay": 611,
     "timeWeek": 565,
     "timeMonth": 547,
     "timeYear": 547,
@@ -155,7 +155,7 @@
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
     "time": 425,
-    "timeDay": 268,
+    "timeDay": 234,
     "timeWeek": 327,
     "timeMonth": 425,
     "timeYear": 425,
@@ -167,13 +167,13 @@
     "icon": "https://icons.duckduckgo.com/ip3/chat.deepseek.com.ico",
     "slug": "deep-seek",
     "status": "down",
-    "uptime": "1.12%",
+    "uptime": "1.11%",
     "uptimeDay": "10.36%",
     "uptimeWeek": "1.48%",
-    "uptimeMonth": "1.12%",
-    "uptimeYear": "1.12%",
+    "uptimeMonth": "1.11%",
+    "uptimeYear": "1.11%",
     "time": 75,
-    "timeDay": 125,
+    "timeDay": 146,
     "timeWeek": 81,
     "timeMonth": 75,
     "timeYear": 75,
@@ -188,7 +188,7 @@
       "2026-10-31": 1440,
       "2026-10-30": 1440,
       "2026-10-29": 257,
-      "2026-11-08": 0
+      "2026-11-08": 79
     }
   }
 ]
