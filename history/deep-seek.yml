@@ -1,7 +1,7 @@
 url: https://chat.deepseek.com
-status: up
-code: 202
-responseTime: 218
-lastUpdated: 2026-11-07T23:42:51.081Z
+status: down
+code: 403
+responseTime: 74
+lastUpdated: 2026-11-08T02:11:59.147Z
 startTime: 2026-10-29T19:42:44.955Z
 generator: Upptime <https://github.com/upptime/upptime>
