@@ -5,11 +5,11 @@
     "icon": "https://icons.duckduckgo.com/ip3/www.gosuslugi.ru.ico",
     "slug": "gosuslugi",
     "status": "down",
-    "uptime": "55.06%",
+    "uptime": "54.84%",
     "uptimeDay": "56.55%",
-    "uptimeWeek": "50.67%",
-    "uptimeMonth": "55.06%",
-    "uptimeYear": "55.06%",
+    "uptimeWeek": "50.47%",
+    "uptimeMonth": "54.84%",
+    "uptimeYear": "54.84%",
     "time": 2164,
     "timeDay": 1804,
     "timeWeek": 2076,
@@ -29,7 +29,7 @@
       "2026-11-08": 573,
       "2026-11-09": 961,
       "2026-11-10": 766,
-      "2026-11-11": 2
+      "2026-11-11": 73
     }
   },
   {
@@ -45,7 +45,7 @@
     "uptimeYear": "100.00%",
     "time": 1774,
     "timeDay": 1589,
-    "timeWeek": 1827,
+    "timeWeek": 1877,
     "timeMonth": 1774,
     "timeYear": 1774,
     "dailyMinutesDown": {}
@@ -67,7 +67,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-11-11": 161,
+      "2026-11-11": 232,
       "2026-11-10": 1440,
       "2026-11-09": 1440,
       "2026-11-08": 1440,
@@ -100,7 +100,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2026-11-11": 161,
+      "2026-11-11": 232,
       "2026-11-10": 1440,
       "2026-11-09": 1440,
       "2026-11-08": 1440,
@@ -129,7 +129,7 @@
     "uptimeYear": "100.00%",
     "time": 274,
     "timeDay": 250,
-    "timeWeek": 245,
+    "timeWeek": 261,
     "timeMonth": 274,
     "timeYear": 274,
     "dailyMinutesDown": {}
@@ -147,7 +147,7 @@
     "uptimeYear": "100.00%",
     "time": 568,
     "timeDay": 536,
-    "timeWeek": 587,
+    "timeWeek": 566,
     "timeMonth": 568,
     "timeYear": 568,
     "dailyMinutesDown": {}
@@ -165,7 +165,7 @@
     "uptimeYear": "100.00%",
     "time": 390,
     "timeDay": 260,
-    "timeWeek": 275,
+    "timeWeek": 278,
     "timeMonth": 390,
     "timeYear": 390,
     "dailyMinutesDown": {}
@@ -183,7 +183,7 @@
     "uptimeYear": "0.84%",
     "time": 69,
     "timeDay": 52,
-    "timeWeek": 79,
+    "timeWeek": 84,
     "timeMonth": 69,
     "timeYear": 69,
     "dailyMinutesDown": {
@@ -197,7 +197,7 @@
       "2026-10-31": 1440,
       "2026-10-30": 1440,
       "2026-10-29": 257,
-      "2026-11-11": 161,
+      "2026-11-11": 232,
       "2026-11-10": 1440,
       "2026-11-09": 1440,
       "2026-11-08": 1308
